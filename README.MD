@@ -55,7 +55,13 @@ Por ultimo, estando en la carpeta raiz, utilizaremos el script Apolo-11.py (pued
 La lista de argumentos son:
 
 > -i para el intervalo en segundos de la simulacion
+>
 > -a para la cantidad de archivos que se generaran en la simulacion
+>
+> -min para la cantidad minima al azar de archivos que se generaran en la simulacion. (Se utiliza en conjunto con el argumento -max)
+>
+> -max para la cantidad maxima al azar de archivos que se generaran en la simulacion. (Se utiliza en conjunto con el argumento -min)
+
 
 
 
