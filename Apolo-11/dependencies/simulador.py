@@ -6,6 +6,7 @@ from .generador import *
 from .project_utils import *
 
 class Apolo11Simulador:
+    
     def __init__(self, ruta_preferencia):
         self.ruta_preferencia = ruta_preferencia
         self.ruta_devices = os.path.join(self.ruta_preferencia, "devices")
@@ -13,6 +14,8 @@ class Apolo11Simulador:
         self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
         self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
         self.devise_type = ["Satellite fleet", "Lunar colonization", "Mars Tourism", "Intergalactic exploration"]
+        ValidarPath(self.ruta_devices)
+        ValidarPath(self.ruta_backups)
 
     def ejecutar_simulacion(self, intervalo=20, num_archivos=random.randint(1, 100)):
         # Lógica para la simulación
