@@ -13,7 +13,7 @@ class Apolo11Simulador:
         self.ruta_backups = os.path.join(self.ruta_preferencia, "backups")
         self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
         self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
-        self.devise_type = ["Satellite fleet", "Lunar colonization", "Mars Tourism", "Intergalactic exploration"]
+        self.devise_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
         ValidarPath(self.ruta_devices)
         ValidarPath(self.ruta_backups)
 
