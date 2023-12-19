@@ -3,14 +3,16 @@ import random
 from datetime import datetime
 import argparse
 from dependencies.simulador import Apolo11Simulador
+import dependencies.project_utils as pu
 
 
 def main():
     try:
-        #Obtiene la ruta donde se guardan los archivos
+        # Obtiene la ruta donde se guardan los archivos
         ruta_preferencia = os.path.join(os.getcwd(), "files")
+        pu.ValidarPath(ruta_preferencia)
 
-        #Inicializa el objeto del simulador y se le añade la ruta de guardado de archivos
+        # Inicializa el objeto del simulador y se le añade la ruta de guardado de archivos
         apolo11_simulador = Apolo11Simulador(ruta_preferencia)
         
         # Configura el parser de argumentos

@@ -1,7 +1,7 @@
 import os
 from time import sleep
 
-#Funcion de barra de progreso para dar una ayuda visual en la consola al usuario
+# Funcion de barra de progreso para dar una ayuda visual en la consola al usuario
 def progress_bar(progress, total):
     percent = 100 * (progress/float(total))
     bar = '█' * int(percent) + '-' * (100-int(percent))
@@ -9,7 +9,7 @@ def progress_bar(progress, total):
     if progress==total:
         print(f"\r|{bar}| {percent:.2f}%", end="\r\n\n")
 
-#Funcion para buscar archivos con una extension especifica en una carpeta dada
+# Funcion para buscar archivos con una extension especifica en una carpeta dada
 def files_search(extension, path):
     try:
         # Obtener la lista de archivos en la carpeta
@@ -26,9 +26,9 @@ def files_search(extension, path):
             #print(f"No se encontraron archivos con la extensión '{extension}' en la carpeta.")
             return None
     except Exception as error:
-        print("\nAn error occurred:", type(error).__name__, "-", error)
+        ErrorFormat(error)
 
-#Funcion para eliminar archivos con una extension especifica en una carpeta dada
+# Funcion para eliminar archivos con una extension especifica en una carpeta dada
 def file_remove(extension, path):
     try:
         # Obtener la lista de archivos en la carpeta
@@ -54,4 +54,16 @@ def file_remove(extension, path):
             print("No se encontraron archivos")
     
     except Exception as error:
-        print("\nAn error occurred:", type(error).__name__, "-", error)
+        ErrorFormat(error)
+
+# Funcion para validar que una carpeta exista, en caso de que no, se crea
+def ValidarPath(path: str):
+    try:
+        if not os.path.exists(path):
+            os.mkdir(path)
+    except Exception as error:
+        ErrorFormat(error)
+
+# Función para imprimir los errores de las excepciones
+def ErrorFormat(error: Exception):
+    print("\nAn error occurred:", type(error).__name__, "-", error)
