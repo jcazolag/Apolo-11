@@ -93,7 +93,7 @@ class Apolo11Simulador:
                         iteracion = iteraciones["UNKN"]
                 
                 date_now = datetime.now() #Toma la fecha actual
-                date = date_now.strftime("%d/%m/%Y-%H:%M:%S") #Formatea la fecha a: ddmmyyHHMISS
+                date = date_now.strftime("%d/%m/%Y-%H:%M:%S") #Formatea la fecha a: dd/mm/yy-H:M:S
 
                 status = random.choice(self.estados) #Elige uns estatus random de la lista "estados"
 
