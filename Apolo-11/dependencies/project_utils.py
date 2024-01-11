@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 from time import sleep
 
 # Funcion de barra de progreso para dar una ayuda visual en la consola al usuario
@@ -20,10 +21,8 @@ def files_search(extension, path):
 
         # Verificar si hay archivos con la extensión especificada
         if archivos_con_extension:
-            #print(f"{len(archivos_con_extension)} archivos encontrados")
             return archivos_con_extension
         else:
-            #print(f"No se encontraron archivos con la extensión '{extension}' en la carpeta.")
             return None
     except Exception as error:
         ErrorFormat(error)
@@ -52,7 +51,23 @@ def file_remove(extension, path):
             print(f"\nSe eliminaron {len(archivos_con_extension)} archivos")
         else:
             print("No se encontraron archivos")
-    
+    except Exception as error:
+        ErrorFormat(error)
+        
+
+# Función para obtener la data de los archivos y devolverlos en un dict
+def ObtenerData(ruta_preferencia):
+    try:
+        data: dict = []
+        files = files_search(".log", ruta_preferencia)
+        if files is not None:
+            for file in files:
+                path = f"{ruta_preferencia}\{file}"
+                df = pd.read_csv(path, sep=";")
+                list_items = df.to_dict(orient='records')
+                item = list_items[0]
+                data.append(item)
+            print(data) 
     except Exception as error:
         ErrorFormat(error)
 

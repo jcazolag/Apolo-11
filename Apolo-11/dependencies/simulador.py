@@ -13,7 +13,7 @@ class Apolo11Simulador:
         self.ruta_backups = os.path.join(self.ruta_preferencia, "backups")
         self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
         self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
-        self.devise_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
+        self.device_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
         ValidarPath(self.ruta_devices)
         ValidarPath(self.ruta_backups)
 
@@ -31,7 +31,7 @@ class Apolo11Simulador:
                 self.generar_archivos(num_archivos)
                 #self.generar_informes()
             else:
-                bucle  = True
+                bucle = True
                 print(f"Se encontraron {len(validar_archivos)} archivos ya existentes", end="\n\n")
                 
                 while bucle:
@@ -40,6 +40,8 @@ class Apolo11Simulador:
                     
                     if opcion.strip(" ") == "1":
                         print("opcion 1")
+                        generador = Generador(self.ruta_devices)
+                        generador.generar_informe()
                         bucle = False
                     elif opcion.strip(" ") == "2":
                         file_remove(".log", self.ruta_devices)
@@ -56,7 +58,7 @@ class Apolo11Simulador:
     def generar_archivos(self, num_archivos):
         # Lógica para la generación de archivos
         try:
-            archivo = GenerarArchivo(self.ruta_devices) #Se inicializa el objeto de la clase GenerarArchivo
+            archivo = Generador(self.ruta_devices) #Se inicializa el objeto de la clase GenerarArchivo
 
             #Iteracion de los archivos creado por cada mision
             iteraciones = {
@@ -97,20 +99,20 @@ class Apolo11Simulador:
 
                 status = random.choice(self.estados) #Elige uns estatus random de la lista "estados"
 
-                devise_type = None #Inicializa el tipo de la mision a None
+                device_type = None #Inicializa el tipo de la mision a None
 
                 #Segun la mision se selecciona el tipo de la mision y en caso de ser "UNKN" el tipo de la mision y el estatus se setea a "unknown"
                 match mission:
                     case "ORBONE": 
-                        devise_type = self.devise_type[0]
+                        device_type = self.device_type[0]
                     case "CLNM": 
-                        devise_type = self.devise_type[1]
+                        device_type = self.device_type[1]
                     case "TMRS": 
-                        devise_type = self.devise_type[2]
+                        device_type = self.device_type[2]
                     case "GALXONE":
-                        devise_type = self.devise_type[3]
+                        device_type = self.device_type[3]
                     case "UNKN":
-                        devise_type="unknown"
+                        device_type="unknown"
                         status="unknown"
                 
                 hash_file = None # Se inicializa el hash del objeto a None
@@ -120,8 +122,8 @@ class Apolo11Simulador:
                     hash_file = hash((
                             'date', date,
                             'mission', mission,
-                            'devise_type', devise_type,
-                            'devise_status', status
+                            'device_type', device_type,
+                            'device_status', status
                         ))
                 else:
                     hash_file = "unknown"
@@ -131,8 +133,8 @@ class Apolo11Simulador:
                 mision_dic = {} #Dicionario de los elementos de la mision
                 mision_dic['date'] = date
                 mision_dic['mission'] = mission
-                mision_dic['devise_type'] = devise_type
-                mision_dic['devise_status']=status
+                mision_dic['device_type'] = device_type
+                mision_dic['device_status']= status
                 mision_dic['hash'] = hash_file
 
                 mission_list.append(mision_dic)
@@ -143,10 +145,6 @@ class Apolo11Simulador:
 
         except Exception as error:
             print("\nAn error occurred:", type(error).__name__, "-", error)
-
-    def generar_informes(self):
-        # Lógica para la generación de informes
-        pass
         
 
     def limpiar_archivos_procesados(self):
