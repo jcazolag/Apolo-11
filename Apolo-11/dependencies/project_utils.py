@@ -67,3 +67,6 @@ def ValidarPath(path: str):
 # Función para imprimir los errores de las excepciones
 def ErrorFormat(error: Exception):
     print("\nAn error occurred:", type(error).__name__, "-", error)
+    
+def limpiar_consola():
+    os.system("cls")

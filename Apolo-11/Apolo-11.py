@@ -4,6 +4,7 @@ from datetime import datetime
 import argparse
 from dependencies.simulador import Apolo11Simulador
 import dependencies.project_utils as pu
+from dependencies.menu import *
 
 
 def main():
@@ -58,12 +59,12 @@ def main():
                 print('El argumento "-min" no puede ser mayor al argumento "-max"')
             else:
                 #ejecuta la simulacion con los argumento intervalo, minimo de archivo y maximo de archivos dado por el usuario
-                apolo11_simulador.ejecutar_simulacion(intervalo=args_intervalo,num_archivos=random.randint(abs(args.min_archivos), abs(args.max_archivos)))
+                apolo11_simulador.ejecutar_simulacion(intervalo=args.intervalo,num_archivos=random.randint(abs(args.min_archivos), abs(args.max_archivos)))
         elif args.intervalo is not None and args.archivos is None and args.min_archivos is not None and args.max_archivos is None or args.intervalo is not None and args.archivos is None and args.min_archivos is None and args.max_archivos is not None:
             print('Los argumentos "-min" y "-max" se deben usar en conjunto para determinar al azar la cantidad de archivos a generar entre "-min" hasta "-max"')
         else:
             #ejecuta la simulacion sin argumentos dados por el usuario
-            apolo11_simulador.ejecutar_simulacion()
+            menu_ppal()
     except Exception as error:
         print("\nAn error occurred:", type(error).__name__, "-", error)
 

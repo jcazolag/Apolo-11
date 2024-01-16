@@ -14,6 +14,7 @@ class Apolo11Simulador:
         self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
         self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
         self.devise_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
+        self.mision_name = ["OrbitOne", "ColonyMoon", "VacMars", "GalaxyTwo"]
         ValidarPath(self.ruta_devices)
         ValidarPath(self.ruta_backups)
 
@@ -103,14 +104,19 @@ class Apolo11Simulador:
                 match mission:
                     case "ORBONE": 
                         devise_type = self.devise_type[0]
+                        mision_name = self.mision_name[0]
                     case "CLNM": 
                         devise_type = self.devise_type[1]
+                        mision_name = self.mision_name[1]
                     case "TMRS": 
                         devise_type = self.devise_type[2]
+                        mision_name = self.mision_name[2]
                     case "GALXONE":
                         devise_type = self.devise_type[3]
+                        mision_name = self.mision_name[3]
                     case "UNKN":
                         devise_type="unknown"
+                        mision_name = "unknown"
                         status="unknown"
                 
                 hash_file = None # Se inicializa el hash del objeto a None
@@ -130,14 +136,14 @@ class Apolo11Simulador:
                 mission_list = [] #Lista de los elementos de la mision
                 mision_dic = {} #Dicionario de los elementos de la mision
                 mision_dic['date'] = date
-                mision_dic['mission'] = mission
+                mision_dic['mission_name'] = mision_name
                 mision_dic['devise_type'] = devise_type
                 mision_dic['devise_status']=status
                 mision_dic['hash'] = hash_file
 
                 mission_list.append(mision_dic)
 
-                archivo.generar_archivo(mission_list, iteracion) #Se llama la funcion generar_archivo con el parametro de misiones y el parametro iteracion
+                archivo.generar_archivo(mission_list, iteracion, mission) #Se llama la funcion generar_archivo con el parametro de misiones y el parametro iteracion
 
                 progress_bar(i, num_archivos)
 
