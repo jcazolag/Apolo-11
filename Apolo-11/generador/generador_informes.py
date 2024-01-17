@@ -1,4 +1,4 @@
-import utilidades.util as util
+from utilidades.formato import FormatoUtil as fu
 
 class GeneradorInformes():
     def __init__(self, ruta_preferencia):
@@ -7,7 +7,7 @@ class GeneradorInformes():
     def generar(self):
         try:
             data: dict = []
-            data = util.obtener_data(self.ruta_preferencia)
+            #data = util.obtener_data(self.ruta_preferencia)
             print(data)
         except Exception as error:
-            util.error_format(error)
+            fu.error_format(error)

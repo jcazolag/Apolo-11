@@ -2,14 +2,15 @@ import os
 import random
 import argparse
 import simulador.simulador as simulador
-import utilidades.util as util
+from utilidades.archivos import ArchivosUtil as au
+from utilidades.formato import FormatoUtil as fu
 
 
 def main():
     try:
         # Obtiene la ruta donde se guardan los archivos
         ruta_preferencia = os.path.join(os.getcwd(), "files")
-        util.validar_path(ruta_preferencia)
+        au.validar_path(ruta_preferencia)
 
         # Inicializa el objeto del simulador y se le añade la ruta de guardado de archivos
         apolo11_simulador = simulador.Apolo11Simulador(ruta_preferencia)
@@ -64,10 +65,10 @@ def main():
             #ejecuta la simulacion sin argumentos dados por el usuario
             apolo11_simulador.ejecutar_simulacion()
     except Exception as error:
-        print("\nAn error occurred:", type(error).__name__, "-", error)
+        fu.error_format(error)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as error:
-        print("\nAn error occurred:", type(error).__name__, "-", error)
+        fu.error_format(error)

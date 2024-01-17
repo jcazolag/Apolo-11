@@ -2,7 +2,9 @@ import os
 import random
 import generador.generador_archivos as ga
 import generador.generador_informes as gi
-import utilidades.util as util
+from utilidades.archivos import ArchivosUtil as au
+from utilidades.formato import FormatoUtil as fu
+
 
 class Apolo11Simulador:
     
@@ -10,15 +12,15 @@ class Apolo11Simulador:
         self.ruta_preferencia = ruta_preferencia
         self.ruta_devices = os.path.join(self.ruta_preferencia, "devices")
         self.ruta_backups = os.path.join(self.ruta_preferencia, "backups")
-        util.validar_path(self.ruta_devices)
-        util.validar_path(self.ruta_backups)
+        au.validar_path(self.ruta_devices)
+        au.validar_path(self.ruta_backups)
 
     def ejecutar_simulacion(self, intervalo=20, num_archivos=random.randint(1, 100)):
         try:
             print("\nMISION APOLO-11", end="\n\n")
 
             # Valida si ya hay archivos existentes
-            validar_archivos = util.files_search(".log", self.ruta_devices) 
+            validar_archivos = au.files_search(".log", self.ruta_devices) 
             if validar_archivos is None:
                 generador_archivos = ga.GeneradorArchivos(self.ruta_devices)
                 generador_archivos.generar(num_archivos)
@@ -36,7 +38,7 @@ class Apolo11Simulador:
                         generador_informe.generar()
                         bucle = False
                     elif opcion.strip(" ") == "2":
-                        util.file_remove(".log", self.ruta_devices)
+                        au.file_remove(".log", self.ruta_devices)
                         bucle = False
                     elif opcion.strip(" ") == "3":
                         print("\nSimulacion finalizada\n")
@@ -45,4 +47,4 @@ class Apolo11Simulador:
                     else:
                         print("\nOpción incorrecta. Intentelo nuevamente", end="\n\n")
         except Exception as error:
-            print("An error occurred:", type(error).__name__, "-", error)
+            fu.error_format(error)

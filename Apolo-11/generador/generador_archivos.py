@@ -2,7 +2,9 @@ import pandas as pd
 import random
 from time import sleep
 from datetime import datetime
-import utilidades.util as util
+from utilidades.presentacion import PresentacionUtil as pu
+from utilidades.formato import FormatoUtil as fu
+
 
 class GeneradorArchivos:
     
@@ -25,7 +27,7 @@ class GeneradorArchivos:
             iteracion: int = 0 
 
             print(f"Generando {num_archivos} archivo(s):", end="\n")
-            util.progress_bar(0, num_archivos)
+            pu.progress_bar(0, num_archivos)
 
             for i in range(1, num_archivos + 1):
                 sleep(0.1)
@@ -89,13 +91,14 @@ class GeneradorArchivos:
                 mission_list.append(mision_dic)
                 self.guardar(mission_list, iteracion) #Se llama la funcion generar_archivo con el parametro de misiones y el parametro iteracion
                 
-                util.progress_bar(i, num_archivos)
+                pu.progress_bar(i, num_archivos)
         except Exception as error:
-            util.error_format(error)
+            fu.error_format(error)
+
 
     def guardar(self, mission_list, iteracion):
         try:
             df = pd.DataFrame(mission_list)
             df.to_csv(f"{self.ruta_preferencia}\\APL{mission_list[0]['mission']}-{iteracion}.log", index=None, sep=";", encoding='utf-8-sig')
         except Exception as error:
-            util.error_format(error)
+            fu.error_format(error)
