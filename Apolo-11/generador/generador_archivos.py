@@ -8,8 +8,8 @@ from utilidades.formato import FormatoUtil as fu
 
 class GeneradorArchivos:
     
-    def __init__(self, ruta_preferencia):
-        self.ruta_preferencia = ruta_preferencia
+    def __init__(self, ruta_devices):
+        self.ruta_devices = ruta_devices
         self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
         self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
         self.device_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
@@ -99,6 +99,6 @@ class GeneradorArchivos:
     def guardar(self, mission_list, iteracion):
         try:
             df = pd.DataFrame(mission_list)
-            df.to_csv(f"{self.ruta_preferencia}\\APL{mission_list[0]['mission']}-{iteracion}.log", index=None, sep=";", encoding='utf-8-sig')
+            df.to_csv(f"{self.ruta_devices}\\APL{mission_list[0]['mission']}-{iteracion}.log", index=None, sep=";", encoding='utf-8-sig')
         except Exception as error:
             fu.error_format(error)

@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 from time import sleep
 from utilidades.formato import FormatoUtil as fu
 from utilidades.presentacion import PresentacionUtil as pu
@@ -7,7 +6,7 @@ from utilidades.presentacion import PresentacionUtil as pu
 class ArchivosUtil:
     
     @staticmethod
-    def files_search(extension, path):
+    def files_search(extension, path) -> list:
         try:
             archivos = os.listdir(path)
             archivos_con_extension = [archivo for archivo in archivos if archivo.endswith(extension)]
@@ -20,19 +19,19 @@ class ArchivosUtil:
 
 
     @staticmethod
-    def file_remove(extension, path):
+    def file_remove(extension, path) -> None:
         try:
             archivos = os.listdir(path)
             archivos_con_extension = [archivo for archivo in archivos if archivo.endswith(extension)]
             if archivos_con_extension is not None:
                 print("\nEliminando archivos:", end="\n")
                 pu.progress_bar(0, len(archivos_con_extension))
-                i = 0
+                i:int = 0
                 for archivo in archivos_con_extension:
                     sleep(0.1)
                     ruta_archivo = os.path.join(path, archivo)
                     os.remove(ruta_archivo)
-                    i+=1
+                    i += 1
                     pu.progress_bar(i,len(archivos_con_extension))
 
                 print(f"\nSe eliminaron {len(archivos_con_extension)} archivos")
@@ -43,7 +42,7 @@ class ArchivosUtil:
 
 
     @staticmethod
-    def validar_path(path: str):
+    def validar_path(path: str) -> None:
         try:
             if not os.path.exists(path):
                 os.mkdir(path)

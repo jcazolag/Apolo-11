@@ -4,6 +4,8 @@ import generador.generador_archivos as ga
 import generador.generador_informes as gi
 from utilidades.archivos import ArchivosUtil as au
 from utilidades.formato import FormatoUtil as fu
+from utilidades.presentacion import PresentacionUtil as pu
+from utilidades.archivos import ArchivosUtil as au
 
 
 class Apolo11Simulador:
@@ -15,36 +17,11 @@ class Apolo11Simulador:
         au.validar_path(self.ruta_devices)
         au.validar_path(self.ruta_backups)
 
-    def ejecutar_simulacion(self, intervalo=20, num_archivos=random.randint(1, 100)):
+    def ejecutar_simulacion(self, intervalo: int = 20, num_archivos: int = random.randint(1, 100)):
         try:
-            print("\nMISION APOLO-11", end="\n\n")
-
-            # Valida si ya hay archivos existentes
-            validar_archivos = au.files_search(".log", self.ruta_devices) 
-            if validar_archivos is None:
-                generador_archivos = ga.GeneradorArchivos(self.ruta_devices)
-                generador_archivos.generar(num_archivos)
-            else:
-                bucle = True
-                print(f"Se encontraron {len(validar_archivos)} archivos ya existentes", end="\n\n")
-                
-                while bucle:
-                    print("Elija una de las siguientes opciones para seguir:\n\n - 1. Generar informe de los archivos existentes y moverlos a backups\n - 2. Eliminar los archivos\n - 3. Cancelar y salir\n\n")
-                    opcion = input(">>>")
-                    
-                    if opcion.strip(" ") == "1":
-                        print("opcion 1")
-                        generador_informe = gi.GeneradorInformes(self.ruta_devices)
-                        generador_informe.generar()
-                        bucle = False
-                    elif opcion.strip(" ") == "2":
-                        au.file_remove(".log", self.ruta_devices)
-                        bucle = False
-                    elif opcion.strip(" ") == "3":
-                        print("\nSimulacion finalizada\n")
-                        bucle = False
-                        break
-                    else:
-                        print("\nOpción incorrecta. Intentelo nuevamente", end="\n\n")
+            generador_archivos = ga.GeneradorArchivos(self.ruta_devices)
+            generador_informes = gi.GeneradorInformes(self.ruta_devices)
+            generador_archivos.generar(num_archivos)
+            generador_informes.generar()
         except Exception as error:
             fu.error_format(error)
