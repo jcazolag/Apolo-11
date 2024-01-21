@@ -1,18 +1,18 @@
 import pandas as pd
 import random
-from time import sleep
-from datetime import datetime
-from utilidades.presentacion import PresentacionUtil as pu
 from utilidades.formato import FormatoUtil as fu
+from utilidades.archivos import ArchivosUtil as au
 
 
 class GeneradorArchivos:
     
     def __init__(self, ruta_devices):
         self.ruta_devices = ruta_devices
-        self.misiones = ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"]
-        self.estados = ["excellent", "good", "warning", "faulty", "killed", "unknown"]
-        self.device_type = ["Satelite", "Ship", "Space suite", "Space vehicle"]
+        self.config = au.load_config()
+        self.misiones = self.config['tipos_misiones']
+        self.estados = self.config['estados_misiones']
+        self.device_type = self.config['tipos_devices']
+        self.mision_name = self.config['nombres_misiones']
 
     def generar(self, num_archivos):
         try:            
@@ -27,10 +27,14 @@ class GeneradorArchivos:
             iteracion: int = 0 
 
             print(f"Generando {num_archivos} archivo(s):", end="\n")
-            pu.progress_bar(0, num_archivos)
 
-            for i in range(1, num_archivos + 1):
-                sleep(0.1)
+            list_dates: list = []
+            list_missions: list = []
+            list_devices_types: list = []
+            list_devices_status: list = []
+            list_hashes: list = []
+
+            for i in range(num_archivos):
                 mission: str = random.choice(self.misiones)
                 match mission:
                     case "ORBONE": 
@@ -49,23 +53,26 @@ class GeneradorArchivos:
                         iteraciones["UNKN"] += 1
                         iteracion = iteraciones["UNKN"]
                 
-                date_now = datetime.now()
-                date = date_now.strftime("%d/%m/%Y-%H:%M:%S") # Formatea la fecha a: dd/mm/yy-H:M:S
-                status = random.choice(self.estados) # Elige uns estatus random de la lista "estados"
-                device_type = None #I nicializa el tipo de la mision a None
+                date = fu.obtener_datetime_actual()
+                status = random.choice(self.estados)
+                device_type = None
 
-                # Segun la mision se selecciona el tipo de la mision y en caso de ser "UNKN" el tipo de la mision y el estatus se setea a "unknown"
                 match mission:
                     case "ORBONE": 
                         device_type = self.device_type[0]
+                        mision_name = self.mision_name[0]
                     case "CLNM": 
                         device_type = self.device_type[1]
+                        mision_name = self.mision_name[1]
                     case "TMRS": 
                         device_type = self.device_type[2]
+                        mision_name = self.mision_name[2]
                     case "GALXONE":
                         device_type = self.device_type[3]
+                        mision_name = self.mision_name[3]
                     case "UNKN":
                         device_type="unknown"
+                        mision_name = "unknown"
                         status="unknown"
                 
                 hash_file = None # Se inicializa el hash del objeto a None
@@ -80,25 +87,34 @@ class GeneradorArchivos:
                         ))
                 else:
                     hash_file = "unknown"
-                
-                mission_list = [] #Lista de los elementos de la mision
-                mision_dic = {} #Dicionario de los elementos de la mision
+
+                mission_list = []
+                mision_dic = {}
                 mision_dic['date'] = date
-                mision_dic['mission'] = mission
+                mision_dic['mission'] = mision_name
                 mision_dic['device_type'] = device_type
                 mision_dic['device_status']= status
                 mision_dic['hash'] = hash_file
                 mission_list.append(mision_dic)
-                self.guardar(mission_list, iteracion) #Se llama la funcion generar_archivo con el parametro de misiones y el parametro iteracion
                 
-                pu.progress_bar(i, num_archivos)
-        except Exception as error:
-            fu.error_format(error)
+                file_path: str = f"{self.ruta_devices}\\APL{mission}-{iteracion}.log"
+                
+                au.guardarArchivo(mission_list, file_path)
 
+                list_dates.append(date)
+                list_missions.append(mision_name)
+                list_devices_types.append(device_type)
+                list_devices_status.append(status)
+                list_hashes.append(hash_file)
 
-    def guardar(self, mission_list, iteracion):
-        try:
-            df = pd.DataFrame(mission_list)
-            df.to_csv(f"{self.ruta_devices}\\APL{mission_list[0]['mission']}-{iteracion}.log", index=None, sep=";", encoding='utf-8-sig')
+            dataFrame = pd.DataFrame({
+                'date': list_dates,
+                'mission': list_missions,
+                'device_type': list_devices_types,
+                'device_status': list_devices_status,
+                'hash': list_hashes
+            })
+            path: str = f"{self.ruta_devices}\\ALL-DATA.log"
+            au.guardarDataFrame(dataFrame, path)
         except Exception as error:
             fu.error_format(error)

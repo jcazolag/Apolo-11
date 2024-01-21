@@ -1,9 +1,28 @@
 import os
+import json
+import pandas as pd
 from time import sleep
 from utilidades.formato import FormatoUtil as fu
 from utilidades.presentacion import PresentacionUtil as pu
 
+
 class ArchivosUtil:
+    
+    @staticmethod
+    def guardarArchivo(data: list, file_path: str):
+        try:
+            df = pd.DataFrame(data)
+            df.to_json(file_path)
+        except Exception as error:
+            fu.error_format(error)
+            
+
+    @staticmethod
+    def guardarDataFrame(dataFrame: pd.DataFrame, path: str):
+        try:
+            dataFrame.to_json(path)
+        except Exception as error:
+            fu.error_format(error)
     
     @staticmethod
     def files_search(extension, path) -> list:
@@ -49,3 +68,14 @@ class ArchivosUtil:
         except Exception as error:
             fu.error_format(error)
 
+
+    @staticmethod
+    def load_config():
+        try:
+            config_path = os.path.join(os.getcwd())
+            with open(f"{config_path}\\config.json") as config_file:
+                data = json.load(config_file)
+                print(data)
+            return data
+        except Exception as error:
+            fu.error_format(error)
