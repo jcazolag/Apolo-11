@@ -9,21 +9,48 @@ from utilidades.presentacion import PresentacionUtil as pu
 class ArchivosUtil:
     
     @staticmethod
-    def guardarArchivo(data: list, file_path: str):
+    def guardar_archivo(data: list, path: str):
         try:
-            df = pd.DataFrame(data)
-            df.to_json(file_path)
+            with open(path, 'w') as f:
+                json.dump(data, f)
         except Exception as error:
             fu.error_format(error)
-            
+
 
     @staticmethod
-    def guardarDataFrame(dataFrame: pd.DataFrame, path: str):
+    def guardar_dataframe(dataFrame: pd.DataFrame, path: str):
         try:
             dataFrame.to_json(path)
         except Exception as error:
             fu.error_format(error)
-    
+
+
+    @staticmethod
+    def obtener_data(ruta_devices) -> list:
+        try:
+            files = ArchivosUtil.files_search(".log", ruta_devices)
+            result: list = []
+            if files is not None:
+                for file in files:
+                    with open(f"{ruta_devices}\\{file}") as f:
+                        result_file = json.load(f)
+                        result.append(result_file)
+                return result
+            else:
+                return None
+        except Exception as error:
+            fu.error_format(error)
+
+
+    @staticmethod
+    def save_file(data, path):
+        try:
+            with open(path, 'w') as f:
+                json.dump(data, f)
+        except Exception as error:
+            fu.error_format(error)
+
+
     @staticmethod
     def files_search(extension, path) -> list:
         try:
@@ -75,7 +102,6 @@ class ArchivosUtil:
             config_path = os.path.join(os.getcwd())
             with open(f"{config_path}\\config.json") as config_file:
                 data = json.load(config_file)
-                print(data)
             return data
         except Exception as error:
             fu.error_format(error)

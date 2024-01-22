@@ -30,7 +30,7 @@ class Apolo11Simulador:
             generador_informes = gi.GeneradorInformes(self.ruta_devices)
             iterator: int = 1
             while (True):
-                print(f"Simulacion: {iterator}")
+                print(f"Simulación Nº: {iterator}", end="\n")
                 if (intervalo is None):
                     intervalo: int = self.intervalo_simulacion_default
                 if (num_archivos is None):
