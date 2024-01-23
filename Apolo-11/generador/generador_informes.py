@@ -29,6 +29,11 @@ class GeneradorInformes:
             dict_3 = {"Consolidacion misiones": result_3}
             list_result.append(dict_3)
             
+            # reporte calculo de porcentajes
+            result_4: dict = self.generar_reporte_calculo_porcentaje(data)
+            dict_4 = {"Calculo de porcentajes": result_4}
+            list_result.append(dict_4)
+            
             date: str = fu.obtener_datetime_actual()
             path_reportes:str = f"{self.ruta_devices}\\APLSTATS-REPORTE-{str(date)}.log"
             au.save_file(list_result, path_reportes)
@@ -103,6 +108,32 @@ class GeneradorInformes:
                         dict["device_status"] = item["device_status"]
                         dict["count"] = 1
                         result.append(dict)
+            return result
+        except Exception as error:
+            fu.error_format(error)
+
+
+    def generar_reporte_calculo_porcentaje(self, data: list):
+        try:
+            result: list = []
+            total: int = len(data)
+            for item in data:
+                values = item.values()
+                value_exists = [
+                    d for d in result if d["mission"] in values
+                    and d["device_type"] in values
+                ]
+                if len(value_exists) > 0:
+                    value_exists[0]["count"] += 1
+                    porcentage = round((value_exists[0]["count"]/total) * 100, 1)
+                    value_exists[0]["porcentage"] = f"{porcentage}%"
+                else:
+                    dict = {}
+                    dict["mission"] = item["mission"]
+                    dict["device_type"] = item["device_type"]
+                    dict["count"] = 1
+                    dict["porcentage"] = f"{round((1/total) * 100, 1)}%"
+                    result.append(dict)
             return result
         except Exception as error:
             fu.error_format(error)
