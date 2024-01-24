@@ -9,7 +9,7 @@ class GeneradorInformes:
         self.ruta_devices = ruta_devices
 
 
-    def generar(self):
+    def generar(self, nro_simulacion: int):
         try:
             list_result: list = []
             data = au.obtener_data(self.ruta_devices)
@@ -37,6 +37,10 @@ class GeneradorInformes:
             date: str = du.obtener_datetime_actual()
             path_reportes:str = f"{self.ruta_devices}\\APLSTATS-REPORTE-{str(date)}.log"
             au.guardar_archivo(list_result, path_reportes)
+
+            result_tablero_control: dict = self.generar_tablero_control(data, nro_simulacion)
+            path_tablero_control = f"{self.ruta_devices}\\APLSTATS-TABLERO-CONTROL-{str(date)}.log"
+            au.guardar_archivo(result_tablero_control, path_tablero_control)
         except Exception as error:
             fu.error_format(error)
 
@@ -139,20 +143,24 @@ class GeneradorInformes:
             fu.error_format(error)
 
 
-    def generar_tablero_control(self, simulacion: int, data: list):
+    def generar_tablero_control(self, data: list, nro_simulacion: int) -> dict:
         try:
             config = au.load_config()
-            # total: int = len(data)
-            # nro_simulacion: int = simulacion
-            # actual_datetime: str = du.obtener_datetime_actual()
-            # mission_names: list = config["nombres_misiones"]
-            # devices_type: list = config["tipos_devices"]
-            # devices_status: list = config["estados_misiones"]
-            # result: dict = {
-            #     "Resumen simulacion": {
-            #         "Simulacion": 
-            #         "Cantidad total de archivos": total,
-            #     }
-            # }
+            total: int = len(data)
+            actual_datetime: str = du.obtener_datetime_actual_easy_format()
+            mission_names: list = config["nombres_misiones"]
+            devices_type: list = config["tipos_devices"]
+            devices_status: list = config["estados_misiones"]
+            result: dict = {
+                "Resumen simulacion": {
+                    "Simulacion": nro_simulacion,
+                    "Cantidad total de archivos": total,
+                    "Fecha de ejecución": actual_datetime,
+                    "Misiones": ', '.join(map(str, mission_names)),
+                    "Tipos de dispositivos": ', '.join(map(str, devices_type)),
+                    "Estados": ', '.join(map(str, devices_status))
+                }
+            }
+            return result
         except Exception as error:
             fu.error_format(error)

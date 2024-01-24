@@ -43,7 +43,7 @@ class Apolo11Simulador:
                         self.cantidad_archivos_max_default)
 
                 generador_archivos.generar(num_archivos)
-                generador_informes.generar()
+                generador_informes.generar(iterator)
                 au.move_files_to_backup(self.ruta_devices, self.ruta_backups, iterator)
                 print("Los archivos se movieron a la carpeta backup")
                 iterator += 1
