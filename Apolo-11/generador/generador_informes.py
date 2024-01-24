@@ -1,11 +1,11 @@
-import pandas as pd
 from utilidades.formato import FormatoUtil as fu
 from utilidades.archivos import ArchivosUtil as au
+from utilidades.date import DateUtil as du
 
 class GeneradorInformes:
 
 
-    def __init__(self, ruta_devices):
+    def __init__(self, ruta_devices: str):
         self.ruta_devices = ruta_devices
 
 
@@ -34,9 +34,9 @@ class GeneradorInformes:
             dict_4 = {"Calculo de porcentajes": result_4}
             list_result.append(dict_4)
             
-            date: str = fu.obtener_datetime_actual()
+            date: str = du.obtener_datetime_actual()
             path_reportes:str = f"{self.ruta_devices}\\APLSTATS-REPORTE-{str(date)}.log"
-            au.save_file(list_result, path_reportes)
+            au.guardar_archivo(list_result, path_reportes)
         except Exception as error:
             fu.error_format(error)
 
@@ -135,5 +135,24 @@ class GeneradorInformes:
                     dict["porcentage"] = f"{round((1/total) * 100, 1)}%"
                     result.append(dict)
             return result
+        except Exception as error:
+            fu.error_format(error)
+
+
+    def generar_tablero_control(self, simulacion: int, data: list):
+        try:
+            config = au.load_config()
+            # total: int = len(data)
+            # nro_simulacion: int = simulacion
+            # actual_datetime: str = du.obtener_datetime_actual()
+            # mission_names: list = config["nombres_misiones"]
+            # devices_type: list = config["tipos_devices"]
+            # devices_status: list = config["estados_misiones"]
+            # result: dict = {
+            #     "Resumen simulacion": {
+            #         "Simulacion": 
+            #         "Cantidad total de archivos": total,
+            #     }
+            # }
         except Exception as error:
             fu.error_format(error)

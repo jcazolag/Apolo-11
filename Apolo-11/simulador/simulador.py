@@ -18,7 +18,7 @@ class Apolo11Simulador:
         au.validar_path(self.ruta_devices)
         au.validar_path(self.ruta_backups)
         self.config = au.load_config()
-        self.intervalo_simulacion_default = self.config['intervalo_simulacion']
+        self.intervalo_simulacion_default = self.config['intervalo_simulacion_segundos']
         self.cantidad_archivos_min_default = self.config['cantidad_archivos_min']
         self.cantidad_archivos_max_default = self.config['cantidad_archivos_max']
 
@@ -37,8 +37,15 @@ class Apolo11Simulador:
                     num_archivos: int = random.randint(
                         self.cantidad_archivos_min_default,
                         self.cantidad_archivos_max_default)
+                elif (num_archivos is not None and iterator > 1):
+                    num_archivos: int = random.randint(
+                        self.cantidad_archivos_min_default,
+                        self.cantidad_archivos_max_default)
+
                 generador_archivos.generar(num_archivos)
                 generador_informes.generar()
+                au.move_files_to_backup(self.ruta_devices, self.ruta_backups, iterator)
+                print("Los archivos se movieron a la carpeta backup")
                 iterator += 1
                 sleep(intervalo)
         except Exception as error:

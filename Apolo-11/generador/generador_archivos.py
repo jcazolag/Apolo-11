@@ -2,6 +2,7 @@ import pandas as pd
 import random
 from utilidades.formato import FormatoUtil as fu
 from utilidades.archivos import ArchivosUtil as au
+from utilidades.date import DateUtil as du
 
 
 class GeneradorArchivos:
@@ -53,7 +54,7 @@ class GeneradorArchivos:
                         iteraciones["UNKN"] += 1
                         iteracion = iteraciones["UNKN"]
                 
-                date = fu.obtener_datetime_actual()
+                date = du.obtener_datetime_actual()
                 status = random.choice(self.estados)
                 device_type = None
 

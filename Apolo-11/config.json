@@ -1,9 +1,10 @@
 {
-    "intervalo_simulacion": 20,
+    "intervalo_simulacion_segundos": 20,
     "cantidad_archivos_min": 0,
     "cantidad_archivos_max": 100,
     "tipos_misiones": ["ORBONE", "CLNM", "TMRS", "GALXONE", "UNKN"],
     "nombres_misiones": ["OrbitOne", "ColonyMoon", "VacMars", "GalaxyTwo"],
     "estados_misiones": ["excellent", "good", "warning", "faulty", "killed", "unknown"],
-    "tipos_devices": ["Satelite", "Ship", "Space suite", "Space vehicle"]
+    "tipos_devices": ["Satelite", "Ship", "Space suite", "Space vehicle"],
+    "formato_fecha": "%d%m%Y%H%M%S"
 }

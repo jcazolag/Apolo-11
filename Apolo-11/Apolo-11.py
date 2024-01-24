@@ -2,6 +2,7 @@ import os
 import random
 import argparse
 from simulador.simulador import Apolo11Simulador
+from utilidades.menu import MenuUtil
 from utilidades.archivos import ArchivosUtil as au
 from utilidades.formato import FormatoUtil as fu
 
@@ -44,6 +45,10 @@ def main():
                             help='Define la cantidad maxima de archivos' +
                             ' que genera la simulacion.' +
                             ' Debe usarse con el argumento "-min"',
+                            default=None)
+        
+        parser.add_argument('-m',
+                            help='Muestra menú de ayuda',
                             default=None)
 
         # Parsea los argumentos de la línea de comandos
@@ -134,6 +139,10 @@ def main():
     except Exception as error:
         fu.error_format(error)
 
+
+    def ejecutar_menu_ppal():
+        menu = MenuUtil()
+        menu.menu_ppal()
 
 if __name__ == "__main__":
     try:

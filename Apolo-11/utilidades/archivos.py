@@ -18,14 +18,6 @@ class ArchivosUtil:
 
 
     @staticmethod
-    def guardar_dataframe(dataFrame: pd.DataFrame, path: str):
-        try:
-            dataFrame.to_json(path)
-        except Exception as error:
-            fu.error_format(error)
-
-
-    @staticmethod
     def obtener_data(ruta_devices) -> list:
         try:
             files = ArchivosUtil.files_search(".log", ruta_devices)
@@ -38,15 +30,6 @@ class ArchivosUtil:
                 return result
             else:
                 return None
-        except Exception as error:
-            fu.error_format(error)
-
-
-    @staticmethod
-    def save_file(data, path):
-        try:
-            with open(path, 'w') as f:
-                json.dump(data, f)
         except Exception as error:
             fu.error_format(error)
 
@@ -105,3 +88,18 @@ class ArchivosUtil:
             return data
         except Exception as error:
             fu.error_format(error)
+
+
+    @staticmethod
+    def move_files_to_backup(ruta_devices: str, ruta_backup: str, simulacion: int):
+        try:
+            files = ArchivosUtil.files_search(".log", ruta_devices)
+            if files is not None:
+                for file in files:
+                    path_origen: str = f"{ruta_devices}\\{file}"
+                    path_destino: str = f"{ruta_backup}\\simulacion_{simulacion}"
+                    ArchivosUtil.validar_path(path_destino)
+                    os.rename(path_origen, f"{path_destino}\\{file}")
+        except Exception as error:
+            fu.error_format(error)
+
