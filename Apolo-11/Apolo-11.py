@@ -4,6 +4,7 @@ import argparse
 from simulador.simulador import Apolo11Simulador
 from utilidades.archivos import ArchivosUtil as au
 from utilidades.formato import FormatoUtil as fu
+from utilidades.menu import MenuUtil
 
 
 def main():
@@ -46,12 +47,20 @@ def main():
                             ' Debe usarse con el argumento "-min"',
                             default=None)
 
+        parser.add_argument('-m',
+                            '--menu',
+                            type=str,
+                            help='Menu de ayuda ' +
+                            ' -m open: para abrir el menu',
+                            default=None)
+
         # Parsea los argumentos de la línea de comandos
         args = parser.parse_args()
 
         if (
             args.intervalo is not None and args.archivos is not None
             and args.min_archivos is None and args.max_archivos is None
+            and args.menu is None
         ):
             apolo11_simulador.ejecutar_simulacion(
                 abs(args.intervalo),
@@ -59,12 +68,14 @@ def main():
         elif (
             args.intervalo is not None and args.archivos is None
             and args.min_archivos is None and args.max_archivos is None
+            and args.menu is None
         ):
             apolo11_simulador.ejecutar_simulacion(
                 intervalo=abs(args.intervalo))
         elif (
             args.archivos is not None and args.intervalo is None
             and args.min_archivos is None and args.max_archivos is None
+            and args.menu is None
         ):
             apolo11_simulador.ejecutar_simulacion(
                 num_archivos=abs(args.archivos))
@@ -76,6 +87,7 @@ def main():
                 args.min_archivos is not None and args.max_archivos is None
                 or args.min_archivos is None
                 and args.max_archivos is not None
+                and args.menu is None
             ):
                 print(
                     'Los argumentos "-min" y "-max" se ' +
@@ -92,6 +104,7 @@ def main():
                 args.min_archivos is not None
                 and args.max_archivos is not None
                 and args.archivos is not None
+                and args.menu is None
             ):
                 print(
                     'El argumento -a no se puede usar ' +
@@ -105,6 +118,7 @@ def main():
             args.intervalo is not None and args.archivos is None
             and args.min_archivos is not None
             and args.max_archivos is not None
+            and args.menu is None
         ):
             if (abs(args.min_archivos) > abs(args.max_archivos)):
                 print(
@@ -122,12 +136,25 @@ def main():
             and args.min_archivos is not None and args.max_archivos is None
             or args.intervalo is not None and args.archivos is None
             and args.min_archivos is None and args.max_archivos is not None
+            and args.menu is None
         ):
             print(
                 'Los argumentos "-min" y "-max" se deben usar ' +
                 'en conjunto para determinar al azar la cantidad ' +
                 'de archivos a generar entre "-min" hasta "-max"'
             )
+        elif (
+            args.intervalo is None and args.archivos is None
+            and args.min_archivos is None and args.max_archivos is None
+            and args.menu is not None
+        ):
+            if args.menu == 'open':
+                menu = MenuUtil()
+                menu.menu_ppal()
+            else:
+                print(
+                    "El argumneto -m debe usarse solamente con" +
+                    " la palabra 'open' (-m open)")
         else:
             apolo11_simulador.ejecutar_simulacion()
             pass
