@@ -1,6 +1,6 @@
 # Apolo-11
 
-## Nombres
+## Integrantes del equipo
 
 * Esteban Sanchez - esanchezce92@gmail.com
 * Elizabeth Alvarez Castro - eliza.ac93@gmail.com
