@@ -8,8 +8,12 @@ from utilitarios.presentacion import PresentacionUtil
 
 
 class MenuUtil:
+    """Esta clase contiene los parámetros y métodos necesarios para ejecutar el menú interactivo.
+    """
 
     def __init__(self) -> None:
+        """Parámetros de inicialización de la clase MenuUtil.
+        """
         self.ruta_archivos: str = os.path.join(os.getcwd(), "files")
         self.ruta_devices: str = os.path.join(self.ruta_archivos, "devices")
         self.apolo11_simulador = Apolo11Simulador(self.ruta_archivos)
@@ -20,6 +24,8 @@ class MenuUtil:
 
 
     def menu_ppal(self) -> None:
+        """Menú Principal.
+        """
         print("\nElija una de las siguiente opciones: ", end="\n")
         print("1. Generar Archivos")
         print("2. Generar Reportes")
@@ -30,6 +36,11 @@ class MenuUtil:
 
 
     def menu_func(self, opcion: str) -> None:
+        """Menús de Generación de Archivos y Reportes.
+
+        :param opcion: Opción seleccionada en el menú principal.
+        :type opcion: str
+        """
         self.archivos_existentes = ArchivosUtil.files_search(".log", self.ruta_devices)
         match opcion:
             case "1":
@@ -71,6 +82,11 @@ class MenuUtil:
 
 
     def menu_existen_archivos(self, cantidad_archvos: int) -> None:
+        """Menú mostrado cuando ya existen archivos generados.
+
+        :param cantidad_archvos: Número de archivos encontrados.
+        :type cantidad_archvos: int
+        """
         PresentacionUtil.limpiar_consola()
         print(f"\n\nATENCIÓN: Se encontraron {cantidad_archvos} archivos ya existentes", end="\n\n")
         print("Elija una de las siguientes opciones para continuar:", end="\n")
@@ -92,6 +108,8 @@ class MenuUtil:
 
 
     def menu_aleatoriedad(self):
+        """Menú para ejecutar la simulación con un numero aleatorio de archivos.
+        """
         print("\n1. Definir rango de aleatoriedad")
         print("2. Generar cantidad aleatoria de archivos")
         print("3. Volver al menú anterior", end="\n\n")

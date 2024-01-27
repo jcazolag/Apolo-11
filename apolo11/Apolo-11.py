@@ -8,8 +8,10 @@ from utilitarios.menu import MenuUtil
 
 
 def main():
+    """Función principal del programa donde se darán los comandos para la ejecución de las simulaciones, apoyandose en la lectura de parsers para los parámetros y valores de la simulación.
+    """
     try:
-        ruta_preferencia = os.path.join(os.getcwd(), "files")
+        ruta_preferencia: str = os.path.join(os.getcwd(), "files")
         au.validar_path(ruta_preferencia)
 
         apolo11_simulador = Apolo11Simulador(ruta_preferencia)
