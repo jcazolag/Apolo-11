@@ -18,13 +18,13 @@ class ArchivosUtil:
 
 
     @staticmethod
-    def obtener_data(ruta_devices) -> list:
+    def obtener_data(path) -> list:
         try:
-            files = ArchivosUtil.files_search(".log", ruta_devices)
+            files = ArchivosUtil.files_search(".log", path)
             result: list = []
             if files is not None:
                 for file in files:
-                    with open(f"{ruta_devices}\\{file}") as f:
+                    with open(f"{path}\\{file}") as f:
                         result_file = json.load(f)
                         result.append(result_file)
                 return result

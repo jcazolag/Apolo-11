@@ -5,8 +5,9 @@ from utilitarios.date import DateUtil as du
 class GeneradorInformes:
 
 
-    def __init__(self, ruta_devices: str):
+    def __init__(self, ruta_devices: str, ruta_reportes: str):
         self.ruta_devices = ruta_devices
+        self.ruta_reportes = ruta_reportes
 
 
     def generar(self, nro_simulacion: int):
@@ -35,12 +36,13 @@ class GeneradorInformes:
             list_result.append(dict_4)
             
             date: str = du.obtener_datetime_actual()
-            path_reportes:str = f"{self.ruta_devices}\\APLSTATS-REPORTE-{str(date)}.log"
+            path_reportes:str = f"{self.ruta_reportes}\\APLSTATS-REPORTE-{str(date)}.log"
             au.guardar_archivo(list_result, path_reportes)
+            print(f"El reporte de la simulacion {nro_simulacion} se guardo en la carpeta de reportes")
 
-            result_tablero_control: dict = self.generar_tablero_control(data, nro_simulacion)
-            path_tablero_control = f"{self.ruta_devices}\\APLSTATS-TABLERO-CONTROL-{str(date)}.log"
-            au.guardar_archivo(result_tablero_control, path_tablero_control)
+            # result_tablero_control: dict = self.generar_tablero_control(data, nro_simulacion)
+            # path_tablero_control = f"{self.ruta_devices}\\APLSTATS-TABLERO-CONTROL-{str(date)}.log"
+            # au.guardar_archivo(result_tablero_control, path_tablero_control)
         except Exception as error:
             fu.error_format(error)
 
@@ -155,7 +157,7 @@ class GeneradorInformes:
                 "Resumen simulacion": {
                     "Simulacion": nro_simulacion,
                     "Cantidad total de archivos": total,
-                    "Fecha de ejecución": actual_datetime,
+                    "Fecha de ejecucion": actual_datetime,
                     "Misiones": ', '.join(map(str, mission_names)),
                     "Tipos de dispositivos": ', '.join(map(str, devices_type)),
                     "Estados": ', '.join(map(str, devices_status))

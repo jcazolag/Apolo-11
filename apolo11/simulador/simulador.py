@@ -15,8 +15,10 @@ class Apolo11Simulador:
         self.ruta_preferencia = ruta_preferencia
         self.ruta_devices = os.path.join(self.ruta_preferencia, "devices")
         self.ruta_backups = os.path.join(self.ruta_preferencia, "backups")
+        self.ruta_reportes = os.path.join(self.ruta_preferencia, "reportes")
         au.validar_path(self.ruta_devices)
         au.validar_path(self.ruta_backups)
+        au.validar_path(self.ruta_reportes)
         self.config = au.load_config()
         self.intervalo_simulacion_default = self.config['intervalo_simulacion_segundos']
         self.cantidad_archivos_min_default = self.config['cantidad_archivos_min']
@@ -27,10 +29,10 @@ class Apolo11Simulador:
                             num_archivos: int = None):
         try:
             generador_archivos = ga.GeneradorArchivos(self.ruta_devices)
-            generador_informes = gi.GeneradorInformes(self.ruta_devices)
+            generador_informes = gi.GeneradorInformes(self.ruta_devices, self.ruta_reportes)
             iterator: int = 1
             while (True):
-                print(f"Simulación Nº: {iterator}", end="\n")
+                print(f"\nSimulación Nº: {iterator}", end="\n")
                 if (intervalo is None):
                     intervalo: int = self.intervalo_simulacion_default
                 if (num_archivos is None):
@@ -45,7 +47,7 @@ class Apolo11Simulador:
                 generador_archivos.generar(num_archivos)
                 generador_informes.generar(iterator)
                 au.move_files_to_backup(self.ruta_devices, self.ruta_backups, iterator)
-                print("Los archivos se movieron a la carpeta backup")
+                print("Los archivos generados se movieron a la carpeta backup")
                 iterator += 1
                 sleep(intervalo)
         except Exception as error:
