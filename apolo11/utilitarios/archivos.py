@@ -9,7 +9,7 @@ from utilitarios.presentacion import PresentacionUtil as pu
 class ArchivosUtil:
     
     @staticmethod
-    def guardar_archivo(data: list, path: str):
+    def guardar_archivo(data: dict, path: str):
         try:
             with open(path, 'w') as f:
                 json.dump(data, f, indent=4)

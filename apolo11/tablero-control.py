@@ -9,13 +9,10 @@ def GenerarTableroControl():
     try:
         ruta_preferencia = os.path.join(os.getcwd(), "files")
         ruta_reportes = os.path.join(ruta_preferencia, "reportes")
-        data: list = au.obtener_data(ruta_reportes)
-        print(data)
-        df = pd.DataFrame(data)
-        # print(df)
-        # fecha_actual: str = du.obtener_datetime_actual()
-        # df.to_csv(f"{ruta_reportes}\\RESUMEN-TABLERO-CONTROL-{fecha_actual}.csv", index=False)
-        # # print(df)
+        au.validar_path(ruta_preferencia)
+        au.validar_path(ruta_reportes)
+        list_data = au.obtener_data(ruta_reportes)
+        print(list_data)
     except Exception as error:
         fu.error_format(error)
 
