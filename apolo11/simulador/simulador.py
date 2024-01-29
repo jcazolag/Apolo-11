@@ -10,8 +10,15 @@ from utilitarios.archivos import ArchivosUtil as au
 
 
 class Apolo11Simulador:
+    """Esta clase se encarga de ejecutar la simulación que generará los archivos y datos de las misiones.
+    """
 
-    def __init__(self, ruta_preferencia):
+    def __init__(self, ruta_preferencia: str):
+        """Parámetros de inicialización de la clase Apolo11Simulador
+
+        :param ruta_preferencia: Ruta que especifica donde se almacenaran las carpetas "devices" y "backups" donde se almacenaran los archivos de la simulación. 
+        :type ruta_preferencia: str
+        """
         self.ruta_preferencia = ruta_preferencia
         self.ruta_devices = os.path.join(self.ruta_preferencia, "devices")
         self.ruta_backups = os.path.join(self.ruta_preferencia, "backups")
@@ -27,6 +34,13 @@ class Apolo11Simulador:
     def ejecutar_simulacion(self,
                             intervalo: int = None,
                             num_archivos: int = None):
+        """Ejecuta la simulacion de las misiones, generando cierta cantidad de archivos cada determinado intervalo de tiempo.
+
+        :param intervalo: Intervalo de tiempo que determina la frecuencia con la que se ejecutaran las misiones.
+        :type intervalo: int
+        :param num_archivos: Cantidad de archivos a generar en cada simulación.
+        :type num_archivos: int
+        """
         try:
             generador_archivos = ga.GeneradorArchivos(self.ruta_devices)
             generador_informes = gi.GeneradorInformes(self.ruta_devices, self.ruta_reportes)

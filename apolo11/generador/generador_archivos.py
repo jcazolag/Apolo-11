@@ -6,8 +6,15 @@ from utilitarios.date import DateUtil as du
 
 
 class GeneradorArchivos:
+    """Esta clase contiene la informacion y procesos necesarios para generar los archivos de las misiones en cada simulación.
+    """
     
-    def __init__(self, ruta_devices):
+    def __init__(self, ruta_devices: str) -> None:
+        """Parámetros de inicialización de la clase GeneradorArchivos
+
+        :param ruta_devices: Ubicación de la carpeta "devices" donde se almacenaran los archivos generados
+        :type ruta_devices: str
+        """
         self.ruta_devices = ruta_devices
         self.config = au.load_config()
         self.misiones = self.config['tipos_misiones']
@@ -15,10 +22,16 @@ class GeneradorArchivos:
         self.device_type = self.config['tipos_devices']
         self.mision_name = self.config['nombres_misiones']
 
-    def generar(self, num_archivos):
+    def generar(self, num_archivos: int):
+        """Genera una cantidad exacta de archivos de las misiones, cantidad definida pro el parámetro "num_archivos".
+        Este parámetro puede ser un número aleatorio o una cantidad indicada por el usuario.
+
+        :param num_archivos: Cantidad de archivos a generar
+        :type num_archivos: int
+        """
         try:            
             # Iteración de los archivos creado por cada mision
-            iteraciones = {
+            iteraciones: dict = {
                 "ORBONE": 0,
                 "CLNM": 0,
                 "TMRS": 0,
@@ -54,9 +67,10 @@ class GeneradorArchivos:
                         iteraciones["UNKN"] += 1
                         iteracion = iteraciones["UNKN"]
                 
-                date = du.obtener_datetime_actual()
-                status = random.choice(self.estados)
-                device_type = None
+                date: str = du.obtener_datetime_actual()
+                status: str = random.choice(self.estados)
+                device_type: str = None
+                mision_name: str = None
 
                 match mission:
                     case "ORBONE": 
@@ -89,7 +103,7 @@ class GeneradorArchivos:
                 else:
                     hash_file = "unknown"
 
-                mision_dic = {}
+                mision_dic: dict = {}
                 mision_dic["date"] = date
                 mision_dic["mission"] = mision_name
                 mision_dic["device_type"] = device_type
