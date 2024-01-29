@@ -61,9 +61,5 @@ La lista de argumentos son:
 > -min para la cantidad minima al azar de archivos que se generaran en la simulacion. (Se utiliza en conjunto con el argumento -max)
 >
 > -max para la cantidad maxima al azar de archivos que se generaran en la simulacion. (Se utiliza en conjunto con el argumento -min)
-
-
-
-
-
- 
+>
+> -m para abrir el menu del proyecto en la consola. (Se debe utilizar con el paramentro 'open')
