@@ -48,41 +48,27 @@ class GeneradorArchivos:
                     case "ORBONE": 
                         iteraciones["ORBONE"] += 1
                         iteracion = iteraciones["ORBONE"]
+                        mision_name = self.mision_name[0]
                     case "CLNM": 
                         iteraciones["CLNM"] += 1
                         iteracion = iteraciones["CLNM"]
+                        mision_name = self.mision_name[1]
                     case "TMRS": 
                         iteraciones["TMRS"] += 1
                         iteracion = iteraciones["TMRS"]
+                        mision_name = self.mision_name[2]
                     case "GALXONE":
                         iteraciones["GALXONE"] += 1
                         iteracion = iteraciones["GALXONE"]
+                        mision_name = self.mision_name[3]
                     case "UNKN":
                         iteraciones["UNKN"] += 1
                         iteracion = iteraciones["UNKN"]
+                        mision_name = random.choice(self.mision_name)
                 
                 date: str = du.obtener_datetime_actual()
                 status: str = random.choice(self.estados)
-                device_type: str = None
-                mision_name: str = None
-
-                match mission:
-                    case "ORBONE": 
-                        device_type = random.choice(self.device_type)
-                        mision_name = self.mision_name[0]
-                    case "CLNM": 
-                        device_type = random.choice(self.device_type)
-                        mision_name = self.mision_name[1]
-                    case "TMRS": 
-                        device_type = random.choice(self.device_type)
-                        mision_name = self.mision_name[2]
-                    case "GALXONE":
-                        device_type = random.choice(self.device_type)
-                        mision_name = self.mision_name[3]
-                    case "UNKN":
-                        mision_name = random.choice(self.mision_name)
-                        device_type = random.choice(self.device_type)
-                        status="unknown"
+                device_type: str = random.choice(self.device_type)
                 
                 hash_file = None
 
