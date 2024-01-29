@@ -1,6 +1,5 @@
 import os
 import json
-import pandas as pd
 from time import sleep
 from utilitarios.formato import FormatoUtil as fu
 from utilitarios.presentacion import PresentacionUtil as pu
@@ -126,6 +125,23 @@ class ArchivosUtil:
             config_path = os.path.join(os.getcwd())
             with open(f"{config_path}\\config.json") as config_file:
                 data = json.load(config_file)
+            return data
+        except Exception as error:
+            fu.error_format(error)
+
+
+    @staticmethod
+    def load_file(path: str):
+        """Método para cargar un archivo
+
+        :param path: ruta absoluta del archivo
+        :type path: str
+        :return: data que contiene el archivo
+        :rtype: any
+        """
+        try:
+            with open(path) as file:
+                data = json.load(file)
             return data
         except Exception as error:
             fu.error_format(error)

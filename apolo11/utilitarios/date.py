@@ -19,9 +19,9 @@ class DateUtil:
 
     @staticmethod
     def obtener_datetime_actual_easy_format() -> str:
-        """Obtiene la hora actual en formato %d%m%Y%H%M%S
+        """Obtiene la hora actual en formato dd/mm/YYYY-HH:MM:SS
 
-        :return: Hora actual en formato %d%m%Y%H%M%S
+        :return: Hora actual en formato dd/mm/YYYY-HH:MM:SS
         :rtype: str
         """
         config = au.load_config()

@@ -175,13 +175,13 @@ class GeneradorInformes:
                 if len(value_exists) > 0:
                     value_exists[0]["count"] += 1
                     porcentage = round((value_exists[0]["count"]/total) * 100, 1)
-                    value_exists[0]["porcentage"] = f"{porcentage}%"
+                    value_exists[0]["porcentage"] = porcentage
                 else:
                     item_dict = {}
                     item_dict["mission"] = item["mission"]
                     item_dict["device_type"] = item["device_type"]
                     item_dict["count"] = 1
-                    item_dict["porcentage"] = f"{round((1/total) * 100, 1)}%"
+                    item_dict["porcentage"] = round((1/total) * 100, 1)
                     result[index] = item_dict
                     index += 1
             return result
