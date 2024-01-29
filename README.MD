@@ -28,7 +28,11 @@
 
 ## Como usar:
 
-Primero iniciaremos el entorno virtual con el siguiente comando en la terminal estando en la carpeta raiz del proyecto:
+Primero crearemos la carpeta del entorno virtual venv.
+
+> python -m venv .\apolo11\venv
+
+Luego, iniciaremos el entorno virtual con el siguiente comando en la terminal estando en la carpeta raiz del proyecto:
 
 * Para Linux o Mac
 
