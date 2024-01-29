@@ -42,12 +42,6 @@ class GeneradorArchivos:
 
             print(f"Se generaron {num_archivos} archivo(s)", end="\n")
 
-            list_dates: list = []
-            list_missions: list = []
-            list_devices_types: list = []
-            list_devices_status: list = []
-            list_hashes: list = []
-
             for i in range(num_archivos):
                 mission: str = random.choice(self.misiones)
                 match mission:
@@ -74,16 +68,16 @@ class GeneradorArchivos:
 
                 match mission:
                     case "ORBONE": 
-                        device_type = self.device_type[0]
+                        device_type = random.choice(self.device_type)
                         mision_name = self.mision_name[0]
                     case "CLNM": 
-                        device_type = self.device_type[1]
+                        device_type = random.choice(self.device_type)
                         mision_name = self.mision_name[1]
                     case "TMRS": 
-                        device_type = self.device_type[2]
+                        device_type = random.choice(self.device_type)
                         mision_name = self.mision_name[2]
                     case "GALXONE":
-                        device_type = self.device_type[3]
+                        device_type = random.choice(self.device_type)
                         mision_name = self.mision_name[3]
                     case "UNKN":
                         mision_name = random.choice(self.mision_name)
@@ -113,11 +107,5 @@ class GeneradorArchivos:
                 file_path: str = f"{self.ruta_devices}\\APL{mission}-{iteracion}.log"
                 
                 au.guardar_archivo(mision_dic, file_path)
-
-                list_dates.append(date)
-                list_missions.append(mision_name)
-                list_devices_types.append(device_type)
-                list_devices_status.append(status)
-                list_hashes.append(hash_file)
         except Exception as error:
             fu.error_format(error)
