@@ -10,7 +10,7 @@ class ArchivosUtil:
     """Esta clase contiene los métodos que interactuan con los archivos generados en la simulación
     """
     @staticmethod
-    def guardar_archivo(data: list, path: str):
+    def guardar_archivo(data: dict, path: str):
         """Método para guardar los archivos generados en la simulación.
 
         :param data: Datos generados en cada misión de la simulación.
@@ -26,7 +26,7 @@ class ArchivosUtil:
 
 
     @staticmethod
-    def obtener_data(ruta_devices: str) -> list:
+    def obtener_data(path: str) -> list:
         """Método para leer la información que contienen los datos guardados.
 
         :param ruta_devices: Ruta donde se almacenan los archivos de la simulación.
@@ -35,11 +35,11 @@ class ArchivosUtil:
         :rtype: list
         """
         try:
-            files = ArchivosUtil.files_search(".log", ruta_devices)
+            files = ArchivosUtil.files_search(".log", path)
             result: list = []
             if files is not None:
                 for file in files:
-                    with open(f"{ruta_devices}\\{file}") as f:
+                    with open(f"{path}\\{file}") as f:
                         result_file = json.load(f)
                         result.append(result_file)
                 return result

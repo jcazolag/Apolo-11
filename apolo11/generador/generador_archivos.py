@@ -86,7 +86,7 @@ class GeneradorArchivos:
                         device_type = self.device_type[3]
                         mision_name = self.mision_name[3]
                     case "UNKN":
-                        mision_name = random.choice(self.misiones)
+                        mision_name = random.choice(self.mision_name)
                         device_type = random.choice(self.device_type)
                         status="unknown"
                 
