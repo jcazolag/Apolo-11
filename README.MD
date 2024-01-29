@@ -28,11 +28,11 @@
 
 ## Como usar:
 
-Primero crearemos la carpeta del entorno virtual venv.
+Estando ubicado en la carpeta que contiene el archivo Apollo-11.py, se creará el entorno virtual de Virtualenv (venv) con el siguiente comando en la terminal:
 
-> python -m venv .\apolo11\venv
+> python -m venv .\venv
 
-Luego, iniciaremos el entorno virtual con el siguiente comando en la terminal estando en la carpeta raiz del proyecto:
+Luego, iniciaremos el entorno virtual con el siguiente comando en la terminal:
 
 * Para Linux o Mac
 
@@ -46,7 +46,7 @@ Para asegurarnos de que las librerias necesarias esten instaladas utilizaremos e
 
 >  pip install -r requirements.txt
 
-Por ultimo, estando en la carpeta raiz, utilizaremos el script Apolo-11.py (puede ser con o sin argumentos):
+Para ejecutar las simulaciones, estando en la carpeta raiz, utilizaremos el script Apolo-11.py (puede ser con o sin argumentos):
 
 * Sin argumentos (los parametros estan predefinidos):
 
@@ -67,3 +67,7 @@ La lista de argumentos son:
 > -max para la cantidad maxima al azar de archivos que se generaran en la simulacion. (Se utiliza en conjunto con el argumento -min)
 >
 > -m para abrir el menu del proyecto en la consola. (Se debe utilizar con el paramentro 'open')
+
+Después de ejecutar el archivo Apolo-11.py, se podrá mostrar el tablero de control ejecutando el script tablero-control.py
+
+> python tablero-control.py
