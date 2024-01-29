@@ -8,7 +8,11 @@ from utilitarios.menu import MenuUtil
 
 
 def main():
-    """Función principal del programa donde se darán los comandos para la ejecución de las simulaciones, apoyandose en la lectura de parsers para los parámetros y valores de la simulación.
+    """
+    Función principal del programa donde se darán los
+    comandos para la ejecución de las simulaciones,
+    apoyandose en la lectura de parsers para los parámetros
+    y valores de la simulación.
     """
     try:
         ruta_preferencia: str = os.path.join(os.getcwd(), "files")
